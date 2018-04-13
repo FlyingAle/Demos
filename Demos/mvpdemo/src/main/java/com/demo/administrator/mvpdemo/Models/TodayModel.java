@@ -19,11 +19,20 @@ public class TodayModel {
   private HostService hostService;
   private Observable<TodayDataBean> result;
   private TodayDataBean dataBean;
+  private static TodayModel todayModel;
 
-  public TodayModel()
+  private TodayModel()
   {
     hostService = HostRetrofit.getInstance();
     getTodayData();
+  }
+
+  public static TodayModel getInstances() {
+    if(todayModel == null)
+    {
+      todayModel = new TodayModel();
+    }
+    return todayModel;
   }
 
   private void  getTodayData()

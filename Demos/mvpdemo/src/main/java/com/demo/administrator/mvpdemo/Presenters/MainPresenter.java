@@ -16,7 +16,7 @@ public class MainPresenter implements BasePresenter{
   {
     this.mainView = mainView;
     mainView.setPresenter(this);
-    todayModel = new TodayModel();
+    todayModel = TodayModel.getInstances();
   }
   @Override
   public void onStart() {
