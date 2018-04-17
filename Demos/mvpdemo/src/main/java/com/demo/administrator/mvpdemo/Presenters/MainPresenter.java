@@ -2,6 +2,7 @@ package com.demo.administrator.mvpdemo.Presenters;
 
 import com.demo.administrator.mvpdemo.BaseClasses.BasePresenter;
 import com.demo.administrator.mvpdemo.Beans.TodayDataBean.ResultsBean.AndroidBean;
+import com.demo.administrator.mvpdemo.Beans.TodayDataBean.ResultsBean.ImageBean;
 import com.demo.administrator.mvpdemo.Models.TodayModel;
 import com.demo.administrator.mvpdemo.Views.MainActivity.MainView;
 import io.reactivex.Observable;
@@ -21,6 +22,7 @@ public class MainPresenter implements BasePresenter{
   @Override
   public void onStart() {
     setTodayModel();
+    setBannerImages();
   }
 
   public void onDestroy()
@@ -32,6 +34,14 @@ public class MainPresenter implements BasePresenter{
   private Observable<List<AndroidBean>> getAndroidList()
   {
     return todayModel.getAndroidBean();
+  }
+  private Observable<List<String>> getImages(){
+    return todayModel.getImages();
+  }
+
+  private void setBannerImages()
+  {
+    mainView.setBannerImages(getImages());
   }
 
   private void setTodayModel()

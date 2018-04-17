@@ -10,8 +10,11 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.demo.administrator.mvpdemo.Adapters.AndroidListAdapter;
 import com.demo.administrator.mvpdemo.Beans.TodayDataBean.ResultsBean.AndroidBean;
+import com.demo.administrator.mvpdemo.Beans.TodayDataBean.ResultsBean.ImageBean;
 import com.demo.administrator.mvpdemo.Presenters.MainPresenter;
 import com.demo.administrator.mvpdemo.R;
+import com.demo.administrator.mvpdemo.Utils.GlideImageLoader;
+import com.youth.banner.Banner;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -22,6 +25,8 @@ public class MainActivity extends AppCompatActivity implements MainView{
 
   private MainPresenter mainPresenter;
   private Unbinder unbinder;
+  @BindView(R.id.imageBanner)
+  Banner banner;
   @BindView(R.id.main_list)
   RecyclerView mainList;
   private AndroidListAdapter androidListAdapter;
@@ -34,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements MainView{
     unbinder =ButterKnife.bind(this);
     new MainPresenter(this);
     mainList.setLayoutManager(new LinearLayoutManager(this));
+    banner.setImageLoader(new GlideImageLoader());
   }
 
   @Override
@@ -47,6 +53,33 @@ public class MainActivity extends AppCompatActivity implements MainView{
     super.onDestroy();
     mainPresenter.onDestroy();
     unbinder.unbind();
+  }
+
+  @Override
+  public void setBannerImages(Observable<List<String>> listData) {
+    listData.observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Observer<List<String>>() {
+          @Override
+          public void onSubscribe(Disposable d) {
+
+          }
+
+          @Override
+          public void onNext(List<String> strings) {
+            banner.setImages(strings)
+                .start();
+          }
+
+          @Override
+          public void onError(Throwable e) {
+
+          }
+
+          @Override
+          public void onComplete() {
+
+          }
+        });
   }
 
   @Override
