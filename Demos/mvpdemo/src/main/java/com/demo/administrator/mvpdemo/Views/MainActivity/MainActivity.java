@@ -1,5 +1,7 @@
 package com.demo.administrator.mvpdemo.Views.MainActivity;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +11,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.demo.administrator.mvpdemo.Adapters.AndroidListAdapter;
+import com.demo.administrator.mvpdemo.Animators.BreathAnimator;
 import com.demo.administrator.mvpdemo.Beans.TodayDataBean.ResultsBean.AndroidBean;
 import com.demo.administrator.mvpdemo.Beans.TodayDataBean.ResultsBean.ImageBean;
 import com.demo.administrator.mvpdemo.Presenters.MainPresenter;
@@ -40,6 +43,16 @@ public class MainActivity extends AppCompatActivity implements MainView{
     new MainPresenter(this);
     mainList.setLayoutManager(new LinearLayoutManager(this));
     banner.setImageLoader(new GlideImageLoader());
+    startBreathAnimation();
+  }
+
+  private void startBreathAnimation()
+  {
+    ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(mainList,"scaleX",0f,1f);
+    objectAnimator.setDuration(4000);
+    objectAnimator.setInterpolator(new BreathAnimator());
+    objectAnimator.setRepeatCount(ValueAnimator.INFINITE);
+    objectAnimator.start();
   }
 
   @Override

@@ -3,8 +3,10 @@ package com.demo.administrator.rxbusdemo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import android.view.View;
 import com.demo.administrator.rxbusdemo.RxBus.RxBus;
 
+import com.jakewharton.rxbinding2.view.RxView;
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 
@@ -19,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+      RxView.clicks(new View(this));
     }
 
     //仅限普通的RXBUS使用
